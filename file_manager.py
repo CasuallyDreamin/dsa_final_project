@@ -1,5 +1,5 @@
 SEPERATOR = "-"
-FILE_PATH = "./files/"
+FILE_PATH = "./Files"
 
 class FileManager:
     def __init__(self, address:str, seperator:str = SEPERATOR):
@@ -48,7 +48,7 @@ class FileManager:
             return False
 
 
-DR_FILE_NAME = "doctors.txt"
-DR_ADDRESS_FILE = FILE_PATH + DR_FILE_NAME
+DR_FILE_NAME = "/doctors.txt"
+DR_FILE_ADDRESS = FILE_PATH + DR_FILE_NAME
 
-doctor_file_manager = FileManager(DR_ADDRESS_FILE)
+doctor_file_manager = FileManager(DR_FILE_ADDRESS)
