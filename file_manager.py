@@ -48,7 +48,7 @@ class FileManager:
             return False
 
 
-DR_FILE_NAME = "/doctors.txt"
-DR_FILE_ADDRESS = FILE_PATH + DR_FILE_NAME
+# DR_FILE_NAME = "/doctors.txt"
+# DR_FILE_ADDRESS = FILE_PATH + DR_FILE_NAME
 
-doctor_file_manager = FileManager(DR_FILE_ADDRESS)
+# doctor_file_manager = FileManager(DR_FILE_ADDRESS)
