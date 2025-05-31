@@ -12,6 +12,3 @@ def validate_date(date: str):
 
 def validate_password(password: str):
     ...
-
-def validate_menu_option(option: str, valid_options: str):
-    ...

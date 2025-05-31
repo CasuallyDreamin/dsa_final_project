@@ -1,6 +1,9 @@
-class admin_panel:
-    def __init__(self):
-        ...
+from classes.car import car
+
+class AdminPanel:
+    def __init__(self, vm):
+        self.curr_user = vm.curr_user
+        self.vm = vm
 
     def register_car(self,
                 color,
@@ -10,7 +13,7 @@ class admin_panel:
                 plate,
                 plate_date):
         
-        # TODO register car
+        # TODO register car return True or False for the UI
         ...
 
     def show_all_cars(self):
