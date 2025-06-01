@@ -5,9 +5,12 @@ class UI:
         self.running = False
         self.vm = vm
 
-    def show(self, curr_user = None, date = None):
-        if curr_user or date:
-            print(f"user : {curr_user} - date: {date}")
+    def show(self):
+        curr_user = self.vm.curr_user
+        sys_date = self.vm.sys_date
+
+        if curr_user or sys_date:
+            print(f"user : {curr_user} - {sys_date}")
         
         print(self.menu)
 
