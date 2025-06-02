@@ -1,5 +1,5 @@
-from ui.main_ui import main_ui
+from classes.db.data_structures.sll import sll
 
-mm = main_ui()
+s = sll()
 
-mm.show()
+print(s)
