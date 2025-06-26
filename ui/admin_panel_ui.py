@@ -17,7 +17,7 @@ class AdminPanelUI(UI):
 """     
         options = 9
         super().__init__(options, menu, vm)
-        self.panel = AdminPanel
+        self.panel = AdminPanel(vm)
 
     def do_task(self, task_id):
         if task_id == "1": self.plate_car()

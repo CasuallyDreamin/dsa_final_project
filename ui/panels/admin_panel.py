@@ -1,4 +1,4 @@
-from classes.car import car
+from classes.car import Car
 
 class AdminPanel:
     def __init__(self, vm):
@@ -13,7 +13,7 @@ class AdminPanel:
                 plate_date):
         
         # TODO register car return True or False for the UI
-        new_car = car(
+        new_car = Car(
                 name,
                 color,
                 manuf_date,
@@ -56,6 +56,6 @@ class AdminPanel:
         return f"owners in {city}"
 
     def change_user_name(self, nid, new_name, new_family_name):
-        return self.vm.change_user_name(nid, new_family_name, new_family_name)
+        return self.vm.change_user_name(nid, new_name, new_family_name)
 
     

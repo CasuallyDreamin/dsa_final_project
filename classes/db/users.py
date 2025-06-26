@@ -4,7 +4,8 @@ from .data_structures.hashtable import hashtable
 class Users:
     def __init__(self):
         self.ht = hashtable()
-
+        # TODO: implement data structure for city based get all
+        
     def add(self, user):
         self.ht.insert(user.nid, user)
         return True
