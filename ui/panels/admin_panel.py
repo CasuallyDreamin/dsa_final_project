@@ -1,8 +1,9 @@
 from classes.car import Car
+from viewmodel import ViewModel
 
 class AdminPanel:
     def __init__(self, vm):
-        self.vm = vm
+        self.vm: ViewModel = vm
 
     def plate_car(self,
                 color,
@@ -20,12 +21,12 @@ class AdminPanel:
                 car_id,
                 plate)
         
-        return self.vm.plate_car(new_car, plate_date)
+        return self.vm.plate_car(new_car, self.vm.sys_date)
         
     def show_all_cars(self):
-        # all_cars = self.vm.get_all_cars()
-        # TODO: return the string version of all cars.
-        return "All Cars!"
+        all_cars = self.vm.get_all_cars()
+
+        return str(all_cars)
 
     def show_all_users(self):
         # all_users = self.vm.get_all_users()

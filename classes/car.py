@@ -7,6 +7,6 @@ class Car:
                  color):
         self.name       = name
         self.manuf_date = manuf_date
-        self.id     = id
+        self.id         = id
         self.plate      = plate
         self.color      = color

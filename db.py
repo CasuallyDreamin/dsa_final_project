@@ -1,8 +1,10 @@
 from classes.db import cars, plates, users
 from classes import car, user, plate
+from file_manager import FileManager
 
 class DataBase:
     def __init__(self):
+        self.fm_cars: FileManager = FileManager()
         self.cars = cars.Cars()
         self.plates = plates.Plates()
         self.users = users.Users()
