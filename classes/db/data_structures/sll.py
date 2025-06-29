@@ -13,7 +13,7 @@ class sll:
         if self.head:
             curr = self.head.next
             while curr:
-                rpr = rpr + "->" + str(curr)
+                rpr = rpr + "->\n" + str(curr)
                 curr = curr.next
         else: rpr = "Empty"
         return rpr

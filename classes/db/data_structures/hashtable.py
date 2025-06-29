@@ -61,13 +61,15 @@ class hashtable:
         
         return hash % self.size
 
-    def _quadratic_probing(self, idx, key = None):
-        
+    def _quadratic_probing(self, idx, key = None, array = None):
+        if array is None:
+            array = self.arr
+
         # return found item index if key is provided
         if key:
             for i in range(self.size):
-                probe_idx = (idx + i**2) % self.size
-                pair: key_value = self.arr.get(probe_idx)
+                probe_idx = (idx + i**2) % array.size
+                pair: key_value = array.get(probe_idx)
 
                 if pair:
                     if pair.key == key:
@@ -76,8 +78,8 @@ class hashtable:
         # return insertion index if key isn't provided
         else:
             for i in range(self.size):
-                probe_idx = (idx + i**2) % self.size
-                pair: key_value = self.arr.get(probe_idx)
+                probe_idx = (idx + i**2) % array.size
+                pair: key_value = array.get(probe_idx)
 
                 if not pair:
                     return probe_idx
@@ -99,7 +101,7 @@ class hashtable:
                 idx = self._hash(old_pair.key)
                 
                 if new_arr.get(idx):
-                    idx = self._quadratic_probing(idx)
+                    idx = self._quadratic_probing(idx, array = new_arr)
 
                 new_arr.insert(idx, new_pair)
 

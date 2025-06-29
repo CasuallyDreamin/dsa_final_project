@@ -1,4 +1,4 @@
-SEPERATOR = "-"
+SEPERATOR = "|"
 FILE_PATH = "./Files"
 
 class FileManager:
@@ -20,9 +20,12 @@ class FileManager:
         data = f.read()    
         data = data.split("\n")
         array = [line.split(self.seperator) for line in data]
-        
+
+        for i, line in enumerate(array):
+            array[i] = [d.strip() for d in line]
+
         f.close()
-        return array
+        return array[1:]
 
 
     def write(self, data: str) -> bool:

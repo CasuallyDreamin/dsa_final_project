@@ -1,5 +1,6 @@
-from classes.db.data_structures.sll import sll
+from db import DataBase
 
-s = sll()
+mydb = DataBase()
 
-print(s)
+print(mydb.get_all_cars())
+print(mydb.get_all_users())

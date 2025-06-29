@@ -1,14 +1,38 @@
 from classes.db import cars, plates, users
 from classes import car, user, plate
-from file_manager import FileManager
+from file_manager import users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
 
 class DataBase:
     def __init__(self):
-        self.fm_cars: FileManager = FileManager()
         self.cars = cars.Cars()
         self.plates = plates.Plates()
         self.users = users.Users()
+        self.read_files()
 
+    def read_files(self):
+
+        # Add cars from file to database
+        for _car in cars_file_manager.read():
+            self.cars.add(
+                car.Car(_car[0],
+                    _car[1],
+                    _car[2],
+                    _car[3],
+                    _car[4],
+                    _car[5])
+            )
+
+        # add users from file to database
+
+        for _user in users_file_manager.read():
+            self.users.add(
+                user.User(_user[0],
+                    _user[1],
+                    _user[2],
+                    _user[3],
+                    _user[4])
+            )
+            
     def add_user(self, user: user.User):
         return self.users.add(user)
 
@@ -17,6 +41,15 @@ class DataBase:
 
     def add_plate(self, plate: plate.Plate):
         return self.plates.add(plate)
+    
+    def get_user(self, nid):
+        return self.users.get(nid)
+    
+    def get_car(self, id):
+        return self.cars.get(id)
+    
+    def get_plates(self, plate_number):
+        return self.plates.get(plate_number)
     
     def get_all_cars(self):
         return self.cars.get_all()
@@ -38,12 +71,4 @@ class DataBase:
     
     def change_user_name(self, nid, new_name, new_family_name):
         return self.db.change_user_name(nid, new_name, new_family_name)
-    
-    def add_user(self, new_user):
-        return self.db.add_user(new_user)
-    
-    def login(self, national_id, password):
-        return self.db.login(national_id, password)
-    
-    def add_plate(self, new_plate):
-        return self.db.add_plate(new_plate)  
+      
