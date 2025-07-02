@@ -1,5 +1,5 @@
-from classes.db import cars, plates, users
-from classes import car, user, plate
+from classes.db import cars, plates, users, owners, cities, drivers
+from classes import car, user, plate, owner, driver, city
 from file_manager import users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
 
 class DataBase:
@@ -7,11 +7,23 @@ class DataBase:
         self.cars = cars.Cars()
         self.plates = plates.Plates()
         self.users = users.Users()
+        self.owners = owners.Owners()
+        self.cities = cities.Cities()
+        self.drivers = drivers.Drivers()
         self.read_files()
 
     def read_files(self):
-
+        
+        for _city in citycode_file_manager.read():
+            self.cities.add(
+                city.City(
+                    _city[0],
+                    _city[1]
+                )
+            )    
+        
         # Add cars from file to database
+        
         for _car in cars_file_manager.read():
             self.cars.add(
                 car.Car(_car[0],
@@ -32,7 +44,18 @@ class DataBase:
                     _user[3],
                     _user[4])
             )
-            
+        
+        # add drivers from file to database
+
+        for _driver in drivers_file_manager.read():
+            self.drivers.add(
+                driver.Driver(
+                    _driver[0],
+                    _driver[1],
+                    _driver[2]
+                )
+            )
+
     def add_user(self, user: user.User):
         return self.users.add(user)
 

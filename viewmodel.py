@@ -10,9 +10,20 @@ class ViewModel:
     # or any other logic beside manipulating data must be done here.
     # DB only does the CRUD operations. 
     # All methods require a rework.
+    def add_user(self, new_user):
+        return self.db.add_user(new_user)
+    
+    def add_plate(self, new_plate):
+        return self.db.add_plate(new_plate)    
 
     def plate_car(self, new_car, plate_date):
         return self.db.add_car(new_car, plate_date)
+
+    def get_user(self, nid):
+        return self.db.get_user(nid)
+
+    def get_car(self, car_id):
+        return self.db.get_car(car_id)
 
     def get_all_cars(self):
         return self.db.get_all_cars()
@@ -35,11 +46,6 @@ class ViewModel:
     def change_user_name(self, nid, new_name, new_family_name):
         return self.db.change_user_name(nid, new_name, new_family_name)
     
-    def add_user(self, new_user):
-        return self.db.add_user(new_user)
-    
     def login(self, national_id, password):
         return self.db.login(national_id, password)
     
-    def add_plate(self, new_plate):
-        return self.db.add_plate(new_plate)    

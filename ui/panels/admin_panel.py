@@ -29,32 +29,32 @@ class AdminPanel:
         return str(all_cars)
 
     def show_all_users(self):
-        # all_users = self.vm.get_all_users()
+        all_users = self.vm.get_all_users()
         # TODO: return the string version of all cars.
-        return "All users!"
+        return all_users
 
     def show_plates_in(self, city):
-        # plates = self.vm.get_plates_from(city)
+        plates = self.vm.get_plates_from(city)
         # plate - active/inactive 
-        return f"Plates from {city}!"
+        return plates
 
     def show_cars_in(self, city):
-        # cars = self.vm.get_cars_from(city) 
+        cars = self.vm.get_cars_from(city) 
         # color - name - date - plate - car_id - owner_id   
-        return f"Cars from {city}!"
+        return cars
 
     def show_cars_between(self, 
                         first_year = None,
                         last_year  = None):
-        # cars = self.vm.get_cars_between(first_year, last_year)
+        cars = self.vm.get_cars_between(first_year, last_year)
         # show cars in manufactured date period
         # name - manufactured date - color - plate
-        return f"cars made from {first_year} to {last_year}"
+        return cars
 
     def show_owners_in(self, city):
-        # owners = self.vm.get_owners_from(city)
+        owners = self.vm.get_owners_from(city)
         # all user infos that live in the city and have an active plate
-        return f"owners in {city}"
+        return owners
 
     def change_user_name(self, nid, new_name, new_family_name):
         return self.vm.change_user_name(nid, new_name, new_family_name)

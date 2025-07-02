@@ -1,4 +1,4 @@
-from classes.user import user
+from classes.user import User
 from datetime import datetime
 from ..tools.generators import generate_plate
 
@@ -21,7 +21,7 @@ class UserPanel:
                               int(birth_date[1]),
                               int(birth_date[2]))
         
-        new_user = user(
+        new_user = User(
                 name,
                 family_name,
                 birth_date,
@@ -43,8 +43,8 @@ class UserPanel:
     
     def get_all_cars(self):
         all_cars = self.vm.get_all_cars()
-        # TODO: format the all_cars object into string and return 
+        return all_cars 
 
     def get_all_plates(self):
         all_plates = self.vm.get_all_plates()
-        # TODO: format the all_plates object into string and return
+        return all_plates
