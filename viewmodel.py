@@ -1,15 +1,16 @@
 from db import DataBase
+from datetime import date
 
 class ViewModel:
     def __init__(self, Database: DataBase):
-        self.curr_user = "name"
-        self.sys_date = "sys_date"
+        self.curr_user = None
+        self.sys_date = date.today()
         self.db: DataBase = Database
 
     # NOTE: All implementation of validation, login check
     # or any other logic beside manipulating data must be done here.
     # DB only does the CRUD operations. 
-    # All methods require a rework.
+
     def add_user(self, new_user):
         return self.db.add_user(new_user)
     
@@ -31,12 +32,19 @@ class ViewModel:
     def get_all_users(self):
         return self.db.get_all_users()
 
+    def get_all_plates(self):
+        if not self.curr_user:
+            return "Must login."
+        
     def get_plates_from(self, city):
         return self.db.get_plates_from(city)
 
     def get_cars_from(self, city):
         return self.db.get_cars_from(city)
 
+    def get_owners_from(self, city):
+        return self.db.get_owners_in(city)
+    
     def get_cars_between(self, first_year, last_year):
         return self.db.get_cars_between(first_year, last_year)
     
@@ -47,5 +55,11 @@ class ViewModel:
         return self.db.change_user_name(nid, new_name, new_family_name)
     
     def login(self, national_id, password):
-        return self.db.login(national_id, password)
+        user = self.db.get_user(national_id)
+        
+        if not user or user.password != password:
+            return False
+        
+        self.curr_user = user
+        return True
     

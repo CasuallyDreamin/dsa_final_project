@@ -32,8 +32,6 @@ class UserPanel:
         return self.vm.add_user(new_user)
 
     def login(self, national_id, password):
-        national_id = int(national_id)
-        
         return self.vm.login(national_id, password)
     
     def create_plate(self):

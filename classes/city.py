@@ -1,7 +1,7 @@
-from db.cars import Cars
-from db.users import Users
-from db.owners import Owners
-from db.plates import Plates
+from .db.cars import Cars
+from .db.users import Users
+from .db.owners import Owners
+from .db.plates import Plates
 
 class City:
     def __init__(self, code, name):

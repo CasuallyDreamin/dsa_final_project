@@ -1,6 +1,8 @@
 from classes.db import penalties, cars, plates, users, owners, cities, drivers, citycode
-from classes import car, user, plate, owner, driver, city, penalty
+from classes import car, user, plate, owner, driver, penalty
 from file_manager import penalties_file_manager, users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
+from classes.city import City
+from classes.db.data_structures.sll import sll
 
 class DataBase:
     def __init__(self):
@@ -27,14 +29,14 @@ class DataBase:
             )
         
         for _city in citycode_file_manager.read():
-            self.cities.add(
-                city.City(_city[0],
-                          _city[1])
-            )
+            new_city = City(_city[0], _city[1])
+            self.cities.add(new_city)
+            self.citycode.add(new_city)
 
         # Add cars from file to database
         
         for _car in cars_file_manager.read():
+            # CarID | CarName | Year | PlateNumber | Color | OwnerNationalID
             new_car = car.Car(_car[0],
                     _car[1],
                     _car[2],
@@ -46,11 +48,16 @@ class DataBase:
 
             city = self.cities.get(new_car.plate_number[-2:])
             city.cars.add(new_car)
-
+            city.plates.add(
+                plate.Plate(new_car.plate_number, 
+                            new_car.id,
+                            new_car.owner_nid
+                            )
+            )
             new_owner = owner.Owner(new_car.owner_nid)
             new_owner.cars.add(new_car)
-            self.owners.add(new_owner)
             city.owners.add(new_owner)
+            self.owners.add(new_owner)
 
         # add drivers from file to database
 
@@ -90,7 +97,7 @@ class DataBase:
     def get_car(self, id):
         return self.cars.get(id)
     
-    def get_plates(self, plate_number):
+    def get_plate(self, plate_number):
         return self.plates.get(plate_number)
     
     def get_all_cars(self):
@@ -100,14 +107,28 @@ class DataBase:
         return self.users.get_all()
 
     def get_plates_from(self, city):
-        self.plates.get_by_city(city)
+        city_code = self.citycode.convert_city_to_code(city)
+        city = self.cities.get(city_code)
+        return city.plates.get_all()
 
     def get_cars_from(self, city):
-        return self.db.get_cars_from(city)
+        city_code = self.citycode.convert_city_to_code(city)
+        city = self.cities.get(city_code)
+        return city.cars.get_all()
 
     def get_cars_between(self, first_year, last_year):
-        return self.db.get_cars_between(first_year, last_year)
-    
+        cars = self.cars.get_all()
+        result = sll()
+        curr = cars.head
+        
+        while curr:
+            curr_car: car.Car = curr.data
+            if int(first_year) <= int(curr_car.manuf_date) <= int(last_year):
+                result.add_first(curr_car)
+            curr = curr.next
+
+        return result
+
     def get_owners_in(self, city):
         return self.db.get_owners_in(city)
     

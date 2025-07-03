@@ -1,4 +1,4 @@
-from db.data_structures.hashtable import hashtable
+from .data_structures.hashtable import hashtable
 
 class Owners:
     def __init__(self):

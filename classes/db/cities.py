@@ -1,4 +1,4 @@
-from db.data_structures.hashtable import hashtable
+from .data_structures.hashtable import hashtable
 from classes.city import City
 
 class Cities:

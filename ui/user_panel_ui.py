@@ -60,7 +60,7 @@ class UserPanelUI(UI):
         password = input("Password: ")
         if not validate_password(password): return input("Invalid Password.")
 
-        if self.panel.login(national_id): input("Successfully logged in.")
+        if self.panel.login(national_id, password): input("Successfully logged in.")
         else: input("Wrong national ID or password.")
 
     def create_plate(self):

@@ -10,7 +10,7 @@ class UI:
         sys_date = self.vm.sys_date
 
         if curr_user or sys_date:
-            print(f"user : {curr_user} - {sys_date}")
+            print(f"user: {curr_user} \ntime: {sys_date}")
         
         print(self.menu)
 

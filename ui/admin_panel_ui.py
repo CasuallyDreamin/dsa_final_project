@@ -71,7 +71,7 @@ class AdminPanelUI(UI):
         city = input("City: ")
         input(self.panel.show_cars_in(city))
 
-    def see_owners_city_filtered(self, city):
+    def see_owners_city_filtered(self):
         city = input("City: ")
         input(self.panel.show_owners_in(city))
 
@@ -81,7 +81,8 @@ class AdminPanelUI(UI):
         
         if not (validate_year(first_year) or validate_year(last_year)):
             return input("Invalid format for years.")
-    
+
+        input(self.panel.show_cars_between(first_year, last_year))
     def change_user_name(self):
         nid = input("National ID: ")
         user = self.vm.get_user(nid)
