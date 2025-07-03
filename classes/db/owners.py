@@ -4,12 +4,12 @@ class Owners:
     def __init__(self):
         self.owners = hashtable()
 
-    def add_owner(self, owner):
+    def add(self, owner):
         self.owners.insert(owner.nid, owner)
         return True
 
-    def get_owner(self, nid):
+    def get(self, nid):
         return self.owners.get(nid)
 
-    def get_all_owners(self):
+    def get_all(self):
         return self.owners.get_all()

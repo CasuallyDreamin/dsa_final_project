@@ -5,7 +5,7 @@ class Drivers:
         self.drivers_nid = hashtable()
         self.drivers_did = hashtable()
 
-    def add_driver(self, driver):
+    def add(self, driver):
         self.drivers_nid.insert(driver.nid)
         self.drivers_did.insert(driver.did)
         return True

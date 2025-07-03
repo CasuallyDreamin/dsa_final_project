@@ -1,6 +1,6 @@
-from classes.db import cars, plates, users, owners, cities, drivers, citycode
-from classes import car, user, plate, owner, driver, city
-from file_manager import users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
+from classes.db import penalties, cars, plates, users, owners, cities, drivers, citycode
+from classes import car, user, plate, owner, driver, city, penalty
+from file_manager import penalties_file_manager, users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
 
 class DataBase:
     def __init__(self):
@@ -10,31 +10,11 @@ class DataBase:
         self.owners = owners.Owners()
         self.cities = cities.Cities()
         self.drivers = drivers.Drivers()
-        self.citycode = citycode()
+        self.citycode = citycode.CityCode()
+        self.penalties = penalties.Penalties()
         self.read_files()
 
     def read_files(self):
-        
-        for _city in citycode_file_manager.read():
-            self.cities.add(
-                city.City(
-                    _city[0],
-                    _city[1]
-                )
-            )    
-        
-        # Add cars from file to database
-        
-        for _car in cars_file_manager.read():
-            self.cars.add(
-                car.Car(_car[0],
-                    _car[1],
-                    _car[2],
-                    _car[3],
-                    _car[4],
-                    _car[5])
-            )
-
         # add users from file to database
 
         for _user in users_file_manager.read():
@@ -46,6 +26,32 @@ class DataBase:
                     _user[4])
             )
         
+        for _city in citycode_file_manager.read():
+            self.cities.add(
+                city.City(_city[0],
+                          _city[1])
+            )
+
+        # Add cars from file to database
+        
+        for _car in cars_file_manager.read():
+            new_car = car.Car(_car[0],
+                    _car[1],
+                    _car[2],
+                    _car[3],
+                    _car[4],
+                    _car[5])
+            
+            self.cars.add(new_car)
+
+            city = self.cities.get(new_car.plate_number[-2:])
+            city.cars.add(new_car)
+
+            new_owner = owner.Owner(new_car.owner_nid)
+            new_owner.cars.add(new_car)
+            self.owners.add(new_owner)
+            city.owners.add(new_owner)
+
         # add drivers from file to database
 
         for _driver in drivers_file_manager.read():
@@ -54,6 +60,18 @@ class DataBase:
                     _driver[0],
                     _driver[1],
                     _driver[2]
+                )
+            )
+
+        for _penalty in penalties_file_manager.read():
+            self.penalties.add(
+                penalty.Penalty(
+                    _penalty[0],
+                    _penalty[1],
+                    _penalty[2],
+                    _penalty[3],
+                    _penalty[4],
+                    _penalty[5]
                 )
             )
 

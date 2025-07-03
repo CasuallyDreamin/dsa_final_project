@@ -1,5 +1,5 @@
 SEPERATOR = "|"
-FILE_PATH = "./Files"
+FILE_PATH = "./files"
 
 class FileManager:
     def __init__(self, address:str, seperator:str = SEPERATOR):
@@ -14,7 +14,7 @@ class FileManager:
             f = open(self.address, "r")
         except FileNotFoundError:
             # if not found, make file
-            self.write()
+            self.write("")
             f = open(self.address, "r")
 
         data = f.read()    
@@ -77,7 +77,8 @@ PHASE4_FILE_ADDRESS             = FILE_PATH + PHASE4_FILE_NAME
 
 # file managers
 
-cars_file_manager     = FileManager(CARS_FILE_ADDRESS)
-users_file_manager    = FileManager(USERS_FILE_ADDRESS)
-citycode_file_manager = FileManager(CITYCODE_FILE_ADDRESS)
-drivers_file_manager  = FileManager(DRIVERS_FILE_ADDRESS)
+cars_file_manager      = FileManager(CARS_FILE_ADDRESS)
+users_file_manager     = FileManager(USERS_FILE_ADDRESS)
+citycode_file_manager  = FileManager(CITYCODE_FILE_ADDRESS)
+drivers_file_manager   = FileManager(DRIVERS_FILE_ADDRESS)
+penalties_file_manager = FileManager(PENALTIES_FILE_ADDRESS)

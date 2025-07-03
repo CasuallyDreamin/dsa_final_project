@@ -10,4 +10,4 @@ class arr:
         return self.array[idx]
     
     def __repr__(self):
-        return f"Array\n______\n{"\n".join([str(pair) for pair in self.array])}\n_______"
+        return str(self.array)
