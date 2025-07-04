@@ -33,8 +33,7 @@ class ViewModel:
         return self.db.get_all_users()
 
     def get_all_plates(self):
-        if not self.curr_user:
-            return "Must login."
+        return self.db.get_all_plates()
         
     def get_plates_from(self, city):
         return self.db.get_plates_from(city)

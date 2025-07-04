@@ -43,17 +43,22 @@ class DataBase:
                     _car[3],
                     _car[4],
                     _car[5])
-            
-            self.cars.add(new_car)
-
-            city = self.cities.get(new_car.plate_number[-2:])
-            city.cars.add(new_car)
-            city.plates.add(
-                plate.Plate(new_car.plate_number, 
+            new_plate = plate.Plate(new_car.plate_number, 
                             new_car.id,
                             new_car.owner_nid
                             )
-            )
+            
+            self.cars.add(new_car)
+            self.plates.add(new_plate)
+            
+            user = self.get_user(new_car.owner_nid)
+            user.cars.add(new_car)
+            user.plates.add(new_plate)
+            
+            city = self.cities.get(new_car.plate_number[-2:])
+            city.cars.add(new_car)
+            city.plates.add(new_plate)
+            
             new_owner = owner.Owner(new_car.owner_nid)
             new_owner.cars.add(new_car)
             city.owners.add(new_owner)
@@ -105,7 +110,10 @@ class DataBase:
 
     def get_all_users(self):
         return self.users.get_all()
-
+    
+    def get_all_plates(self):
+        return self.plates.get_all()
+    
     def get_plates_from(self, city):
         city_code = self.citycode.convert_city_to_code(city)
         city = self.cities.get(city_code)

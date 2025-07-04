@@ -40,9 +40,13 @@ class UserPanel:
         return new_plate
     
     def get_all_cars(self):
+        if not self.vm.curr_user:
+            return input("Must be logged in.")
+        
         all_cars = self.vm.get_all_cars()
         return all_cars 
 
     def get_all_plates(self):
-        all_plates = self.vm.get_all_plates()
-        return all_plates
+        if not self.vm.curr_user:
+            return input("Must be logged in.")
+        return 
