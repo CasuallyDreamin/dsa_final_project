@@ -2,6 +2,7 @@ from classes.db import penalties, cars, plates, users, owners, cities, drivers, 
 from classes import car, user, plate, owner, driver, penalty
 from file_manager import penalties_file_manager, users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
 from classes.city import City
+from classes.user import User
 from classes.db.data_structures.sll import sll
 
 class DataBase:
@@ -20,13 +21,14 @@ class DataBase:
         # add users from file to database
 
         for _user in users_file_manager.read():
-            self.users.add(
-                user.User(_user[0],
-                    _user[1],
-                    _user[2],
-                    _user[3],
-                    _user[4])
+            new_user = User(
+                _user[0],
+                _user[1],
+                _user[2],
+                _user[3],
+                _user[4]
             )
+            self.users.add(new_user)
         
         for _city in citycode_file_manager.read():
             new_city = City(_city[0], _city[1])
@@ -52,8 +54,10 @@ class DataBase:
             self.plates.add(new_plate)
             
             user = self.get_user(new_car.owner_nid)
-            user.cars.add(new_car)
-            user.plates.add(new_plate)
+
+            if user:
+                user.cars.add(new_car)
+                user.plates.add(new_plate)
             
             city = self.cities.get(new_car.plate_number[-2:])
             city.cars.add(new_car)
@@ -94,6 +98,8 @@ class DataBase:
         return self.cars.add(car)
 
     def add_plate(self, plate: plate.Plate):
+        city = self.cities.get(plate.number[-2:])
+        city.plates.add(plate)
         return self.plates.add(plate)
     
     def get_user(self, nid):
@@ -142,4 +148,5 @@ class DataBase:
     
     def change_user_name(self, nid, new_name, new_family_name):
         return self.db.change_user_name(nid, new_name, new_family_name)
-      
+
+db = DataBase()

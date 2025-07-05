@@ -1,6 +1,3 @@
-from db import DataBase
+from ui.tools.validators import validate_date
 
-mydb = DataBase()
-
-print(mydb.get_all_cars())
-print(mydb.get_all_users())
+print(validate_date("2001-12-28"))

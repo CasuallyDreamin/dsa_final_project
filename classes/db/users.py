@@ -4,13 +4,13 @@ from classes.user import User
 class Users:
     def __init__(self):
         self.ht = hashtable()
-        # TODO: implement data structure for city based get all
         
     def add(self, user: User):
-        self.ht.insert(user.nid, user)
+        self.ht.insert(str(user.nid), user)
         return True
 
     def get(self, nid: str)->User:
+        nid = str(nid)
         return self.ht.get(nid)
 
     def exists(self, nid: str)->bool:

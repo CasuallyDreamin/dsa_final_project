@@ -1,10 +1,9 @@
 from viewmodel import ViewModel
 from ui.main_ui import MainUI
 from clear_screen import clear
-from db import DataBase
+from db import db
 
 def main():
-    db = DataBase()
     vm = ViewModel(db)
     ui = MainUI(vm = vm)
     ui.running = True

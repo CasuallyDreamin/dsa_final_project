@@ -1,9 +1,10 @@
 from db import DataBase
 from datetime import date
+from classes.user import User
 
 class ViewModel:
     def __init__(self, Database: DataBase):
-        self.curr_user = None
+        self.curr_user: User = None
         self.sys_date = date.today()
         self.db: DataBase = Database
 
@@ -15,11 +16,15 @@ class ViewModel:
         return self.db.add_user(new_user)
     
     def add_plate(self, new_plate):
+        self.curr_user.add_plate(new_plate)
         return self.db.add_plate(new_plate)    
 
     def plate_car(self, new_car, plate_date):
         return self.db.add_car(new_car, plate_date)
-
+    
+    def get_city_code(self, city):
+        return self.db.citycode.convert_city_to_code(city)
+        
     def get_user(self, nid):
         return self.db.get_user(nid)
 
@@ -34,7 +39,7 @@ class ViewModel:
 
     def get_all_plates(self):
         return self.db.get_all_plates()
-        
+
     def get_plates_from(self, city):
         return self.db.get_plates_from(city)
 
@@ -54,11 +59,15 @@ class ViewModel:
         return self.db.change_user_name(nid, new_name, new_family_name)
     
     def login(self, national_id, password):
-        user = self.db.get_user(national_id)
+        l_user = self.db.users.get(national_id)
         
-        if not user or user.password != password:
+        if not l_user:
+            input("user not found.")
             return False
         
-        self.curr_user = user
+        elif l_user.password != password:
+            input("wrong password.")
+            return False
+
+        self.curr_user = l_user
         return True
-    

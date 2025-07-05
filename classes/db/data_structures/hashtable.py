@@ -74,7 +74,7 @@ class hashtable:
                 if pair:
                     if pair.key == key:
                         return probe_idx
-                    
+                else: return None
         # return insertion index if key isn't provided
         else:
             for i in range(self.size):

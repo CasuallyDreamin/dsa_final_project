@@ -8,7 +8,7 @@ def validate_plate(plate: str):
     return plate[0][2].isalpha() and plate[0][:2].isnumeric() and plate[0][3:].isnumeric()
 
 def validate_nid(national_id: str):
-    return national_id.isalnum()
+    return national_id.isalnum() and len(national_id) == 10
 
 def validate_color(color: str):
     return color in ['WT','BC','RD','BL','GR','OT']
@@ -18,7 +18,7 @@ def validate_date(date: str):
 
     if len(date) != 3: return False
     
-    try: datetime(date[0], date[1], date[2])
+    try: datetime(int(date[0]), int(date[1]), int(date[2]))
     except: return False
 
     return True

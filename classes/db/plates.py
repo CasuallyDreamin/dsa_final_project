@@ -3,7 +3,6 @@ from .data_structures.hashtable import hashtable
 class Plates:    
     def __init__(self):
         self.ht = hashtable()
-        # TODO: implement data structure for city based get all
 
     def add(self, plate):
         self.ht.insert(plate.number, plate)
@@ -18,7 +17,3 @@ class Plates:
 
     def get_all(self):
         return self.ht.get_all()
-
-    def get_by_city(self, city):
-        # TODO
-        return # plates in city

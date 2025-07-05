@@ -1,4 +1,5 @@
 from random import randint, choice
+from classes.db.data_structures.arr import arr
 
 def generate_plate(citycode):
     while True:
@@ -6,19 +7,29 @@ def generate_plate(citycode):
         first_two_digits = str(randint(10,99))
         last_three_digits = str(randint(100,999))
         
-        if alpha == "X":
-            for i in range(len(first_two_digits)):
-                if int(first_two_digits[i]) % 2 == 0:
-                    first_two_digits[i] = str(first_two_digits[i] + 1)
+        f2 = arr(2)
+        l3 = arr(3)
 
-            for i in range(len(last_three_digits)):
-                if int(last_three_digits[i]) % 2 == 0:
-                    last_three_digits[i] = str(last_three_digits[i] + 1)
-
-        if first_two_digits + last_three_digits == first_two_digits[0] * 5: continue    
-        if is_sorted(first_two_digits + last_three_digits): continue
+        for i in range(2): f2.insert(i, first_two_digits[i])
         
-        return f"{first_two_digits}{alpha}{last_three_digits}-{citycode}"
+        for i in range(3): l3.insert(i, last_three_digits[i])
+        
+        if alpha == "X":
+            for i in range(2):
+                if int(f2.get(i)) % 2 == 0:
+                    f2.insert(i, str(int(f2.get(i)) + 1))
+
+            for i in range(3):
+                if int(l3.get(i)) % 2 == 0:
+                    l3.insert(i , str(int(l3.get(i)) + 1)) 
+        plate = ""
+        for i in range(2): plate += f2.get(i)
+        for i in range(3): plate += l3.get(i)
+        
+        if plate == plate[0] * 5: continue    
+        if is_sorted(plate): continue
+        
+        return f"{plate[:2]}{alpha}{plate[2:]}-{citycode}"
 
 def is_sorted(string: str):
     is_desc = True
@@ -26,7 +37,7 @@ def is_sorted(string: str):
     
     for i in range(len(string) - 1):
         if not string[i].isnumeric(): return False
-        if string[i] < string[i + 1]: is_desc = False
-        if string[i] > string[i + 1]: is_asc = False
+        if int(string[i]) < int(string[i + 1]): is_desc = False
+        if int(string[i]) > int(string[i + 1]): is_asc = False
 
     return not (is_desc or is_asc)

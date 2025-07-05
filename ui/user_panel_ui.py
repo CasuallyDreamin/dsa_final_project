@@ -10,8 +10,8 @@ class UserPanelUI(UI):
 1. register
 2. login
 3. create a plate
-4. see all cars
-5. see all plates
+4. see your cars
+5. see your plates
 0. return
 """
         options = 6
@@ -43,10 +43,10 @@ class UserPanelUI(UI):
         if not validate_password(password): return input("Invalid password.")
 
         if self.panel.register( 
+                national_id,
                 name,
                 family_name,
                 birth_date,
-                national_id,
                 password
         ): input("Successfully registered.")
         else: input("National ID already exists.")
@@ -64,12 +64,17 @@ class UserPanelUI(UI):
         else: input("Wrong national ID or password.")
 
     def create_plate(self):
-        input(self.panel.create_plate())
+        city = input("Enter city:")
+        plate = self.panel.create_plate(city)
+        if plate:
+            input(f"{plate} was added to your plates.")
+        else:
+            input("City is not supported.")
 
     def see_all_cars(self):
-        input(self.panel.get_all_cars())
+        input(self.panel.get_user_cars())
 
     def see_all_plates(self):
-        input(self.panel.get_all_plates())
+        input(self.panel.get_user_plates())
 
         

@@ -3,8 +3,7 @@ from .data_structures.hashtable import hashtable
 class Cars:
     def __init__(self):
         self.ht = hashtable()
-    # TODO: implement data structure for city based get all
-
+        
     def add(self, car):
         return self.ht.insert(car.id, car)
         
