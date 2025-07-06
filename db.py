@@ -144,9 +144,14 @@ class DataBase:
         return result
 
     def get_owners_in(self, city):
-        return self.db.get_owners_in(city)
+        city_code = self.citycode.convert_city_to_code(city)
+        city = self.cities.get(city_code)
+        return city.owners.get_all()
     
     def change_user_name(self, nid, new_name, new_family_name):
-        return self.db.change_user_name(nid, new_name, new_family_name)
+        c_user = self.get_user(nid)
+        if new_name != "": c_user.name = new_name
+        if new_family_name != "": c_user.family_name = new_family_name
+        return True
 
 db = DataBase()

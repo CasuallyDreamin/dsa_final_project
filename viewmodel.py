@@ -50,6 +50,8 @@ class ViewModel:
         return self.db.get_owners_in(city)
     
     def get_cars_between(self, first_year, last_year):
+        if last_year == '': last_year = first_year
+        
         return self.db.get_cars_between(first_year, last_year)
     
     def get_owners_in(self, city):

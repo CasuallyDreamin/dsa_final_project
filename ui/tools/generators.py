@@ -2,6 +2,7 @@ from random import randint, choice
 from classes.db.data_structures.arr import arr
 
 def generate_plate(citycode):
+    
     while True:
         alpha = choice("ABCEFGHIJKLMNOQRSTUVWXYZ")
         first_two_digits = str(randint(10,99))
@@ -40,4 +41,4 @@ def is_sorted(string: str):
         if int(string[i]) < int(string[i + 1]): is_desc = False
         if int(string[i]) > int(string[i + 1]): is_asc = False
 
-    return not (is_desc or is_asc)
+    return not is_desc and not is_asc

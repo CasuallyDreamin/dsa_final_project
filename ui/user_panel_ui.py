@@ -67,7 +67,7 @@ class UserPanelUI(UI):
         city = input("Enter city:")
         plate = self.panel.create_plate(city)
         if plate:
-            input(f"{plate} was added to your plates.")
+            input(f"{plate.number} was added to your plates.")
         else:
             input("City is not supported.")
 

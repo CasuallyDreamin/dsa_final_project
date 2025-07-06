@@ -8,3 +8,6 @@ class Owner:
     
     def get_cars(self):
         return self.cars
+    
+    def __repr__(self):
+        return f"Owner National ID: {self.nid}\ncars: {self.cars.get_all()}"

@@ -13,7 +13,6 @@ class AdminPanel:
                 plate,
                 plate_date):
         
-        # TODO register car return True or False for the UI
         new_car = Car(
                 name,
                 color,
@@ -21,7 +20,7 @@ class AdminPanel:
                 car_id,
                 plate)
         
-        return self.vm.plate_car(new_car, self.vm.sys_date)
+        return self.vm.plate_car(new_car)
         
     def show_all_cars(self):
         all_cars = self.vm.get_all_cars()

@@ -31,13 +31,13 @@ class AdminPanelUI(UI):
         elif task_id == "0": self.running = False
 
     def plate_car(self):
-        color = input("Color: ")
+        color = input("Color \nWT: White | BC: Black | RD: Red | BL: Blue | GR: Green | OT: Other): ")
         if not validate_color(color): return input("Invalid Color.")
 
         name = input("Name: ")
         
-        manuf_date = input("Manufactured Date (YYYY-MM-DD)")
-        if not validate_date(manuf_date): return input("Invalid Date")
+        manuf_date = input("Manufactured year YYYY: ")
+        if not validate_year(manuf_date): return input("Invalid year.")
 
         car_id = input("Car ID: ")
 
@@ -45,7 +45,7 @@ class AdminPanelUI(UI):
         if not validate_plate(plate): return input("Invalid Plate.")
 
         plate_date = input("Plate Date (YYYY-MM-DD) leave blank to use system data.")
-        if not validate_date(plate_date): return input("Invalid Plate Date.")
+        if not validate_date(plate_date) and plate_date != "": return input("Invalid Plate Date.")
 
         if self.panel.plate_car(
             color,
