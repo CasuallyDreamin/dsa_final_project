@@ -11,7 +11,10 @@ class ViewModel:
     # NOTE: All implementation of validation, login check
     # or any other logic beside manipulating data must be done here.
     # DB only does the CRUD operations. 
-
+    
+    def add_car(self, new_car):
+        return self.db.add_car(new_car)
+    
     def add_user(self, new_user):
         return self.db.add_user(new_user)
     
@@ -20,7 +23,8 @@ class ViewModel:
         return self.db.add_plate(new_plate)    
 
     def plate_car(self, new_car, plate_date):
-        return self.db.add_car(new_car, plate_date)
+        self.db.ownership_history.add(new_car, plate_date)
+        return self.db.add_car(new_car)
     
     def get_city_code(self, city):
         return self.db.citycode.convert_city_to_code(city)
@@ -30,7 +34,10 @@ class ViewModel:
 
     def get_car(self, car_id):
         return self.db.get_car(car_id)
-
+    
+    def get_plate(self, plate_number):
+        return self.db.get_plate(plate_number)
+    
     def get_all_cars(self):
         return self.db.get_all_cars()
 
@@ -39,6 +46,9 @@ class ViewModel:
 
     def get_all_plates(self):
         return self.db.get_all_plates()
+    
+    def get_all_owners(self):
+        return self.db.get_all_owners()
 
     def get_plates_from(self, city):
         return self.db.get_plates_from(city)

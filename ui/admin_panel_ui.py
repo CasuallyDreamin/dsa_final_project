@@ -8,14 +8,16 @@ class AdminPanelUI(UI):
 1. plate a car
 2. see all cars
 3. see all users
-4. see plates in city
-5. see cars in city
-6. see owners in city
-7. see cars manufactured in time period
-8. change user name
+4. see all plates
+5. see all owners
+6. see plates in city
+7. see cars in city
+8. see owners in city
+9. see cars manufactured in time period
+10. change user name
 0. return
 """     
-        options = 9
+        options = 11
         super().__init__(options, menu, vm)
         self.panel = AdminPanel(vm)
 
@@ -23,11 +25,13 @@ class AdminPanelUI(UI):
         if task_id == "1": self.plate_car()
         elif task_id == "2": self.see_all_cars()
         elif task_id == "3": self.see_all_users()
-        elif task_id == "4": self.see_plates_city_filtered()
-        elif task_id == "5": self.see_cars_city_filtered()
-        elif task_id == "6": self.see_owners_city_filtered()
-        elif task_id == "7": self.see_cars_manufdate_filtered()
-        elif task_id == "8": self.change_user_name()
+        elif task_id == "4": self.see_all_plates()
+        elif task_id == "5": self.see_all_owners()
+        elif task_id == "6": self.see_plates_city_filtered()
+        elif task_id == "7": self.see_cars_city_filtered()
+        elif task_id == "8": self.see_owners_city_filtered()
+        elif task_id == "9": self.see_cars_manufdate_filtered()
+        elif task_id == "10": self.change_user_name()
         elif task_id == "0": self.running = False
 
     def plate_car(self):
@@ -62,7 +66,13 @@ class AdminPanelUI(UI):
 
     def see_all_users(self):
         input(self.panel.show_all_users())
+    
+    def see_all_plates(self):
+        input(self.panel.show_all_plates())
 
+    def see_all_owners(self):
+        input(self.panel.show_all_owners())
+        
     def see_plates_city_filtered(self):
         city = input("City: ")
         input(self.panel.show_plates_in(city))

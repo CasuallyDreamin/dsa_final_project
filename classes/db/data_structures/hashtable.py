@@ -40,7 +40,7 @@ class hashtable:
             return None
 
         pair: key_value = self.arr.get(idx)
-        return pair.value
+        if pair: return pair.value
     
     def get_all(self)->sll:
         all = sll()

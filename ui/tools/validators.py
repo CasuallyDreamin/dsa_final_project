@@ -2,6 +2,7 @@ from datetime import datetime
 
 def validate_plate(plate: str):
     plate = plate.split("-")
+    if len(plate) != 2: return False
     if len(plate[1]) != 2 or not plate[1].isnumeric(): return False
     if len(plate[0]) != 6: return False
 

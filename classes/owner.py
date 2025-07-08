@@ -9,5 +9,8 @@ class Owner:
     def get_cars(self):
         return self.cars
     
+    def add_car(self, new_car):
+        self.cars.add(new_car)
+
     def __repr__(self):
-        return f"Owner National ID: {self.nid}\ncars: {self.cars.get_all()}"
+        return f"\nOwner National ID: {self.nid}\ncars:\n{self.cars.get_all()}"

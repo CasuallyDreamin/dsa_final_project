@@ -1,5 +1,6 @@
 from classes.car import Car
 from viewmodel import ViewModel
+from datetime import datetime
 
 class AdminPanel:
     def __init__(self, vm):
@@ -10,17 +11,33 @@ class AdminPanel:
                 name,
                 manuf_date,
                 car_id,
-                plate,
+                plate_number,
                 plate_date):
         
-        new_car = Car(
-                name,
-                color,
-                manuf_date,
-                car_id,
-                plate)
+        if plate_date == "": plate_date = str(self.vm.sys_date)
+
+        plate = self.vm.get_plate(plate_number)
         
-        return self.vm.plate_car(new_car)
+        if not plate: 
+            input("Plate Does not exist.")
+            return False
+        
+        new_car = Car(
+                car_id,
+                name,
+                manuf_date,
+                color,
+                plate_number,
+                plate.owner_nid)
+        
+        if not self.vm.add_car(new_car):
+            input("Car ID already exists.")
+            return False
+        
+        plate.add_car(new_car, plate_date)
+        self.vm.plate_car(new_car, plate_date)
+        
+        return True
         
     def show_all_cars(self):
         all_cars = self.vm.get_all_cars()
@@ -29,18 +46,26 @@ class AdminPanel:
 
     def show_all_users(self):
         all_users = self.vm.get_all_users()
-        # TODO: return the string version of all cars.
-        return all_users
-
+        
+        return str(all_users)
+    
+    def show_all_plates(self):
+        all_plates = self.vm.get_all_plates()
+        return str(all_plates)
+    
+    def show_all_owners(self):
+        all_owners = self.vm.get_all_owners()
+        return str(all_owners)
+    
     def show_plates_in(self, city):
         plates = self.vm.get_plates_from(city)
         # plate - active/inactive 
-        return plates
+        return str(plates)
 
     def show_cars_in(self, city):
         cars = self.vm.get_cars_from(city) 
         # color - name - date - plate - car_id - owner_id   
-        return cars
+        return str(cars)
 
     def show_cars_between(self, 
                         first_year = None,

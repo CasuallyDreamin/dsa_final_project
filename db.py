@@ -1,4 +1,4 @@
-from classes.db import penalties, cars, plates, users, owners, cities, drivers, citycode
+from classes.db import penalties, cars, plates, users, owners, cities, drivers, citycode, ownership_history
 from classes import car, user, plate, owner, driver, penalty
 from file_manager import penalties_file_manager, users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
 from classes.city import City
@@ -15,6 +15,7 @@ class DataBase:
         self.drivers = drivers.Drivers()
         self.citycode = citycode.CityCode()
         self.penalties = penalties.Penalties()
+        self.ownership_history = ownership_history.Ownership_history()
         self.read_files()
 
     def read_files(self):
@@ -63,11 +64,15 @@ class DataBase:
             city.cars.add(new_car)
             city.plates.add(new_plate)
             
-            new_owner = owner.Owner(new_car.owner_nid)
-            new_owner.cars.add(new_car)
-            city.owners.add(new_owner)
-            self.owners.add(new_owner)
-
+            curr_owner: owner.Owner = self.owners.get(new_car.owner_nid)
+            
+            if not curr_owner:
+                new_owner: owner.Owner = owner.Owner(new_car.owner_nid)
+                new_owner.add_car(new_car)
+                city.owners.add(new_owner)
+                self.owners.add(new_owner)
+            else:
+                curr_owner.add_car(new_car)
         # add drivers from file to database
 
         for _driver in drivers_file_manager.read():
@@ -100,6 +105,7 @@ class DataBase:
     def add_plate(self, plate: plate.Plate):
         city = self.cities.get(plate.number[-2:])
         city.plates.add(plate)
+
         return self.plates.add(plate)
     
     def get_user(self, nid):
@@ -120,6 +126,9 @@ class DataBase:
     def get_all_plates(self):
         return self.plates.get_all()
     
+    def get_all_owners(self):
+        return self.owners.get_all()
+    
     def get_plates_from(self, city):
         city_code = self.citycode.convert_city_to_code(city)
         city = self.cities.get(city_code)
@@ -128,7 +137,8 @@ class DataBase:
     def get_cars_from(self, city):
         city_code = self.citycode.convert_city_to_code(city)
         city = self.cities.get(city_code)
-        return city.cars.get_all()
+        if city: return city.cars.get_all()
+        else: return "City Not Found."
 
     def get_cars_between(self, first_year, last_year):
         cars = self.cars.get_all()
@@ -146,8 +156,9 @@ class DataBase:
     def get_owners_in(self, city):
         city_code = self.citycode.convert_city_to_code(city)
         city = self.cities.get(city_code)
-        return city.owners.get_all()
-    
+        if city: return city.owners.get_all() 
+        else: return "City Not Found."
+
     def change_user_name(self, nid, new_name, new_family_name):
         c_user = self.get_user(nid)
         if new_name != "": c_user.name = new_name
