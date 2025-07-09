@@ -74,28 +74,20 @@ class UserPanel:
 
     def get_user_record(self):
         if not self.vm.curr_user:
-            return input("Must be logged in.")
+            return "Must be logged in."
         
         return self.vm.get_user_record()
      
     def get_plate_record(self, plate):
         if not self.vm.curr_user:
-            return input("Must be logged in.")
+            return "Must be logged in."
         
-        # TODO: Check if user is a driver
-
-        # TODO: get his own plate's offense record
-
-        # offense date - offense level - description
-
+        return self.vm.get_plate_record(plate)
+    
     def get_plate_ownership_history(self, plate):
+        
         if not self.vm.curr_user:
             return input("Must be logged in.")
         
-        # TODO: Check if user is a driver
-
-        # TODO: get plate's ownership history
-
-        # car - start date - end date
-
+        return self.vm.get_plate_ownership_history(plate)
 

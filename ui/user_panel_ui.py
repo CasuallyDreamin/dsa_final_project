@@ -20,7 +20,7 @@ class UserPanelUI(UI):
 """
         options = 10
         super().__init__(options, menu, vm)
-        self.panel = UserPanel(self.vm)
+        self.panel = UserPanel(vm)
 
     def do_task(self, task_id):
         if task_id == "1": self.register()

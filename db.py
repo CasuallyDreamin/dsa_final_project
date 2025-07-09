@@ -1,8 +1,17 @@
+from file_manager import penalties_file_manager, users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager, ownership_history_file_manager
+
 from classes.db import penalties, cars, plates, users, owners, cities, drivers, citycode, ownership_history
-from classes import car, user, plate, owner, driver, penalty
-from file_manager import penalties_file_manager, users_file_manager, cars_file_manager, drivers_file_manager, citycode_file_manager
+# from classes import car, user, plate, owner, driver, penalty, ownership_entry
+
 from classes.city import City
 from classes.user import User
+from classes.plate import Plate
+from classes.car import Car
+from classes.owner import Owner
+from classes.driver import Driver
+from classes.penalty import Penalty
+
+from classes.ownership_entry import OwnershipEntry
 from classes.db.data_structures.sll import sll
 
 class DataBase:
@@ -15,7 +24,7 @@ class DataBase:
         self.drivers = drivers.Drivers()
         self.citycode = citycode.CityCode()
         self.penalties = penalties.Penalties()
-        self.ownership_history = ownership_history.Ownership_history()
+        self.ownership_history = ownership_history.OwnershipHistory()
         self.read_files()
 
     def read_files(self):
@@ -41,13 +50,14 @@ class DataBase:
         
         for _car in cars_file_manager.read():
             # CarID | CarName | Year | PlateNumber | Color | OwnerNationalID
-            new_car = car.Car(_car[0],
+            new_car = Car(_car[0],
                     _car[1],
                     _car[2],
                     _car[3],
                     _car[4],
                     _car[5])
-            new_plate = plate.Plate(new_car.plate_number, 
+            
+            new_plate = Plate(new_car.plate_number, 
                             new_car.id,
                             new_car.owner_nid
                             )
@@ -65,10 +75,10 @@ class DataBase:
             city.cars.add(new_car)
             city.plates.add(new_plate)
             
-            curr_owner: owner.Owner = self.owners.get(new_car.owner_nid)
+            curr_owner: Owner = self.owners.get(new_car.owner_nid)
             
             if not curr_owner:
-                new_owner: owner.Owner = owner.Owner(new_car.owner_nid)
+                new_owner: Owner = Owner(new_car.owner_nid)
                 new_owner.add_car(new_car)
                 city.owners.add(new_owner)
                 self.owners.add(new_owner)
@@ -78,7 +88,7 @@ class DataBase:
 
         for _driver in drivers_file_manager.read():
             self.drivers.add(
-                driver.Driver(
+                Driver(
                     _driver[0],
                     _driver[1],
                     _driver[2]
@@ -86,7 +96,7 @@ class DataBase:
             )
 
         for _penalty in penalties_file_manager.read():
-            new_penalty = penalty.Penalty(
+            new_penalty = Penalty(
                     _penalty[0],
                     _penalty[1],
                     _penalty[2],
@@ -103,14 +113,27 @@ class DataBase:
             penalized_plate = self.plates.get(new_penalty.plate_number)
             penalized_plate.add_penalty(new_penalty)
 
+        for _ownership_entry in ownership_history_file_manager.read():
+            new_entry = OwnershipEntry(
+                    _ownership_entry[0],
+                    _ownership_entry[1],
+                    _ownership_entry[2],
+                    _ownership_entry[3],
+                    _ownership_entry[4])
+            
+            self.ownership_history.add(new_entry)
+            
+            plate = self.plates.get(new_entry.plate_number)
+            plate.add_ownership_entry(new_entry)
+        
 
-    def add_user(self, user: user.User):
+    def add_user(self, user: User):
         return self.users.add(user)
 
-    def add_car(self, car: car.Car):
+    def add_car(self, car: Car):
         return self.cars.add(car)
 
-    def add_plate(self, plate: plate.Plate):
+    def add_plate(self, plate: Plate):
         city = self.cities.get(plate.number[-2:])
         city.plates.add(plate)
 
@@ -158,7 +181,7 @@ class DataBase:
         curr = cars.head
         
         while curr:
-            curr_car: car.Car = curr.data
+            curr_car: Car = curr.data
             if int(first_year) <= int(curr_car.manuf_date) <= int(last_year):
                 result.add_first(curr_car)
             curr = curr.next

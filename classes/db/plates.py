@@ -6,11 +6,10 @@ class Plates:
         self.ht = hashtable()
 
     def add(self, plate: Plate):
-        return self.ht.insert(plate.number, plate)
+        return self.ht.insert(str(plate.number), plate)
         
-
     def get(self, number: str)-> Plate:
-        return self.ht.get(number)
+        return self.ht.get(str(number))
 
     def exists(self, number: str):
         if self.get(number): return True

@@ -6,6 +6,7 @@ class hashtable:
         self.size = size
         self.arr = arr(size)
         self.exp_factor = 0.73
+        self.shrink_factor = 0.3141
         self.occupied = 0
 
     def insert(self, key, value):
@@ -44,12 +45,24 @@ class hashtable:
         pair: key_value = self.arr.get(idx)
         if pair: return pair.value
     
+    def delete(self, key):
+        idx = self._hash(key)
+        idx = self._quadratic_probing(idx, key)
+
+        if idx is None:
+            return False
+
+        self.arr.insert(idx, "x")
+        self.occupied -= 1
+        return True
+    
     def get_all(self)->sll:
         all = sll()
         
         for i in range(self.arr.size):
             pair:key_value = self.arr.get(i)
-            if pair is not None:
+            
+            if pair and pair != 'x':
                 all.add_first(pair.value)
         
         return all
@@ -73,22 +86,25 @@ class hashtable:
                 probe_idx = (idx + i**2) % array.size
                 pair: key_value = array.get(probe_idx)
 
-                if pair:
+                if pair and pair != "x":
                     if pair.key == key:
                         return probe_idx
-                else: return None
+                    
+                elif not pair: return None
+        
         # return insertion index if key isn't provided
         else:
             for i in range(self.size):
                 probe_idx = (idx + i**2) % array.size
                 pair: key_value = array.get(probe_idx)
 
-                if not pair:
+                if not pair or pair == "x":
                     return probe_idx
 
         return None
 
     def _expand(self):
+        
         self.size = int(self.size * 2.763)
         self.occupied = 0
 
@@ -98,7 +114,7 @@ class hashtable:
         for i in range(old_arr.size):
             old_pair: key_value = old_arr.get(i)
             
-            if old_pair:
+            if old_pair and old_pair != 'x':
                 new_pair = key_value(old_pair.key, old_pair.value)
                 idx = self._hash(old_pair.key)
                 
@@ -106,10 +122,35 @@ class hashtable:
                     idx = self._quadratic_probing(idx, array = new_arr)
 
                 new_arr.insert(idx, new_pair)
+                self.occupied += 1
 
         self.arr = new_arr
         del old_arr
+    
+    def _shrink(self):
 
+        self.size = int(self.size / 2.763)
+        self.occupied = 0
+
+        old_arr = self.arr
+        new_arr = arr(self.size)
+
+        for i in range(old_arr.size):
+            old_pair: key_value = old_arr.get(i)
+            
+            if old_pair and old_pair != 'x':
+                new_pair = key_value(old_pair.key, old_pair.value)
+                idx = self._hash(old_pair.key)
+                
+                if new_arr.get(idx):
+                    idx = self._quadratic_probing(idx, array = new_arr)
+
+                new_arr.insert(idx, new_pair)
+                self.occupied += 1
+                
+        self.arr = new_arr
+        del old_arr
+    
     def __repr__(self):
         return f"{self.arr}"
 

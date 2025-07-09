@@ -89,7 +89,15 @@ class ViewModel:
         if not driver: return f"{user.name} {user.family_name} is not a driver."             
         
         return driver.get_all_penalties()
-       
+    
+    def get_plate_record(self, plate):
+        plate = self.db.get_plate(plate)
+        return plate.get_all_penalties()
+
+    def get_plate_ownership_history(self, plate):
+        plate = self.db.get_plate(plate)
+        return plate.get_all_history()
+    
     def change_user_name(self, nid, new_name, new_family_name):
         return self.db.change_user_name(nid, new_name, new_family_name)
     
