@@ -40,6 +40,9 @@ class Driver:
             return 30
         elif level == "High":
             return 50
+        
+    def get_all_penalties(self):
+        return self.penalties.get_all()
     
     def __repr__(self):
         return f"National ID: {self.nid} | Driver ID: {self.did} | License Date: {self.license_date} | Is Active: {self.is_active}"

@@ -5,7 +5,7 @@ class CityCode:
         self.cities = hashtable()
     
     def add(self, city):
-        self.cities.insert(city.name, city.code)
+        return self.cities.insert(city.name, city.code)
 
     def convert_city_to_code(self, city):
         return self.cities.get(city)

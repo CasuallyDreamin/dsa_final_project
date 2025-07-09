@@ -6,8 +6,8 @@ class Users:
         self.ht = hashtable()
         
     def add(self, user: User):
-        self.ht.insert(str(user.nid), user)
-        return True
+        return self.ht.insert(str(user.nid), user)
+        
 
     def get(self, nid: str)->User:
         nid = str(nid)

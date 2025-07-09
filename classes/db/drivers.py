@@ -7,9 +7,14 @@ class Drivers:
         self.drivers_did = hashtable()
 
     def add(self, driver):
-        self.drivers_nid.insert(str(driver.nid), driver)
-        self.drivers_did.insert(str(driver.did), driver)
+        if not self.drivers_nid.insert(str(driver.nid), driver):
+            return False
+       
+        if not self.drivers_did.insert(str(driver.did), driver):
+            return False
+        
         return True
+
     
     def get_by_nid(self, nid) -> Driver:
         return self.drivers_nid.get(str(nid))

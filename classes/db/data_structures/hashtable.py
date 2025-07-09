@@ -24,11 +24,13 @@ class hashtable:
         insert_idx = self._quadratic_probing(idx)
         
         if insert_idx is None:
+
             # no suitable index was found
-            return False
-        
-        self.arr.insert(insert_idx, new_key_value)
-        self.occupied += 1
+            self._expand()
+            self.insert(key, value)
+        else:            
+            self.arr.insert(insert_idx, new_key_value)
+            self.occupied += 1
 
         return True
 

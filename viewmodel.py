@@ -38,6 +38,9 @@ class ViewModel:
     def get_plate(self, plate_number):
         return self.db.get_plate(plate_number)
     
+    def get_driver(self, nid):
+        return self.db.get_driver(nid)
+    
     def get_all_cars(self):
         return self.db.get_all_cars()
 
@@ -66,7 +69,27 @@ class ViewModel:
     
     def get_owners_in(self, city):
         return self.db.get_owners_in(city)
-    
+
+    def get_user_negative_score(self, nid = None):
+        if not nid: nid = self.curr_user.nid
+        
+        user = self.get_user(nid)
+        driver = self.get_driver(nid)
+        
+        if not driver: return f"{user.name} {user.family_name} is not a driver."
+
+        return f"negative score: {driver.score}"
+
+    def get_user_record(self, nid = None):
+        if not nid: nid = self.curr_user.nid
+        
+        user = self.get_user(nid)
+        driver = self.get_driver(nid)
+
+        if not driver: return f"{user.name} {user.family_name} is not a driver."             
+        
+        return driver.get_all_penalties()
+       
     def change_user_name(self, nid, new_name, new_family_name):
         return self.db.change_user_name(nid, new_name, new_family_name)
     

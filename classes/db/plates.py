@@ -6,8 +6,8 @@ class Plates:
         self.ht = hashtable()
 
     def add(self, plate: Plate):
-        self.ht.insert(plate.number, plate)
-        return True
+        return self.ht.insert(plate.number, plate)
+        
 
     def get(self, number: str)-> Plate:
         return self.ht.get(number)

@@ -29,7 +29,8 @@ class DataBase:
                 _user[3],
                 _user[4]
             )
-            self.users.add(new_user)
+            if not self.users.add(new_user):
+                exit(f"user {_user} was not added.")
         
         for _city in citycode_file_manager.read():
             new_city = City(_city[0], _city[1])
@@ -123,6 +124,9 @@ class DataBase:
     
     def get_plate(self, plate_number):
         return self.plates.get(plate_number)
+    
+    def get_driver(self, nid):
+        return self.drivers.get_by_nid(nid)
     
     def get_all_cars(self):
         return self.cars.get_all()

@@ -5,8 +5,8 @@ class Owners:
         self.owners = hashtable()
 
     def add(self, owner):
-        self.owners.insert(str(owner.nid), owner)
-        return True
+        return self.owners.insert(str(owner.nid), owner)
+        
 
     def get(self, nid):
         return self.owners.get(str(nid))

@@ -39,7 +39,7 @@ class UserPanel:
     
     def create_plate(self, city):
         if not self.vm.curr_user:
-            return input("Must be logged in.")
+            return "Must be logged in."
         
         citycode = self.vm.get_city_code(city)
 
@@ -47,39 +47,37 @@ class UserPanel:
             new_plate = Plate(plate_number = generate_plate(citycode),
                               owner_nid = self.vm.curr_user.nid)
             self.vm.add_plate(new_plate)
-            return new_plate
-
+            return f"{new_plate} was succesfully added to your plates"
+        
+        else: 
+            return "City isn't supported or plate already exists."
+        
     def get_user_cars(self):
         if not self.vm.curr_user:
-            return input("Must be logged in.")
+            return "Must be logged in."
         
         cars = self.vm.curr_user.cars.get_all()
         return cars
 
     def get_user_plates(self):
         if not self.vm.curr_user:
-            return input("Must be logged in.")
+            return "Must be logged in."
         
         plates = self.vm.curr_user.plates.get_all()
         return plates
     
     def get_negative_points(self):
         if not self.vm.curr_user:
-            return input("Must be logged in.")
+            return "Must be logged in."
         
-        # TODO: Check if user is a driver
-
-        # TODO: get user's negative points
+        return self.vm.get_user_negative_score()
 
     def get_user_record(self):
         if not self.vm.curr_user:
             return input("Must be logged in.")
         
-        # TODO: Check if user is a driver
-
-        # TODO: get user's offense record
-        # offense date - plate number - offense level - description
-
+        return self.vm.get_user_record()
+     
     def get_plate_record(self, plate):
         if not self.vm.curr_user:
             return input("Must be logged in.")

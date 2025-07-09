@@ -6,8 +6,8 @@ class Cities:
         self.cities = hashtable()
 
     def add(self, new_city: City):
-        self.cities.insert(new_city.code, new_city)
-        return True
+        return self.cities.insert(new_city.code, new_city)
+        
     
     def get(self, code)-> City:
         return self.cities.get(code)

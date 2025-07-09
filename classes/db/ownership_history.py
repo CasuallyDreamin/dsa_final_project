@@ -12,7 +12,7 @@ class Ownership_history:
                                   new_car.owner_nid,
                                   date)
         
-        self.history.add_first(new_entry)
+        return self.history.add_first(new_entry)
 
     def __repr__(self):
         rp = "CarID | OwnerNationalID | Date\n"

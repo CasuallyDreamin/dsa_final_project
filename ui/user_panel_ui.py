@@ -13,9 +13,12 @@ class UserPanelUI(UI):
 4. see your cars
 5. see your plates
 6. see negative points
+7. see your record
+8. see plate record
+9. see plate ownership history
 0. return
 """
-        options = 7
+        options = 10
         super().__init__(options, menu, vm)
         self.panel = UserPanel(self.vm)
 
@@ -25,7 +28,10 @@ class UserPanelUI(UI):
         elif task_id == "3": self.create_plate()
         elif task_id == "4": self.see_all_cars()
         elif task_id == "5": self.see_all_plates()
-        elif task_id == "6": self.see_negative_points()        
+        elif task_id == "6": self.see_negative_points()
+        elif task_id == "7": self.get_user_record()
+        elif task_id == "8": self.get_plate_record()
+        elif task_id == "9": self.get_plate_ownership_history()
         elif task_id == "0": self.running = False
 
     def register(self):
@@ -67,11 +73,7 @@ class UserPanelUI(UI):
 
     def create_plate(self):
         city = input("Enter city:")
-        plate = self.panel.create_plate(city)
-        if plate:
-            input(f"{plate.number} was added to your plates.")
-        else:
-            input("City is not supported.")
+        input(self.panel.create_plate(city))        
 
     def see_all_cars(self):
         input(self.panel.get_user_cars())
@@ -81,3 +83,16 @@ class UserPanelUI(UI):
 
     def see_negative_points(self):
         input(self.panel.get_negative_points())        
+
+    def get_user_record(self):
+        input(self.panel.get_user_record())
+
+    def get_plate_record(self):
+        plate = input("Plate number: ")
+
+        input(self.panel.get_plate_record(plate))
+    
+    def get_plate_ownership_history(self):
+        plate = input("Plate number: ")
+
+        input(self.panel.get_plate_ownership_history(plate))
