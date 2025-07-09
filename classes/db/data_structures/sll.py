@@ -13,9 +13,10 @@ class sll:
         if self.head:
             curr = self.head.next
             while curr:
-                rpr = rpr + "->\n" + str(curr)
+                rpr = rpr + "\n" + str(curr)
                 curr = curr.next
         else: rpr = "Empty"
+        
         return rpr
 
 
@@ -25,4 +26,4 @@ class sll_node:
         self.next: sll_node = None
 
     def __repr__(self):
-        return f"({self.data})"
+        return f"{self.data}"

@@ -57,6 +57,18 @@ class AdminPanel:
         all_owners = self.vm.get_all_owners()
         return str(all_owners)
     
+    def show_all_drivers(self):
+        all_drivers = self.vm.get_all_drivers()
+        return str(all_drivers)
+    
+    def delete_car(self, car_id):
+        # TODO: Change plate activity to inactive
+        return self.vm.delete_car(car_id)
+    
+    def delete_driver(self, nid):
+        # TODO: Remove user from drivers
+        return 
+    
     def show_plates_in(self, city):
         plates = self.vm.get_plates_from(city)
         # plate - active/inactive 
@@ -80,7 +92,30 @@ class AdminPanel:
         # all user infos that live in the city and have an active plate
         return owners
 
+    def show_car_ownership_history(self, car_id):
+        # TODO: return ownership history of the car
+        # owner NID - owning start date - owning end date - plate number
+        return
+
     def change_user_name(self, nid, new_name, new_family_name):
         return self.vm.change_user_name(nid, new_name, new_family_name)
+
+    def change_plate(self, car_id, new_plate):
+        # TODO: change plate of car to new plate
+        return
+    
+    def change_ban_status(self, did):
+        # TODO: change driver license activity (active/inactive)
+        return 
+    
+    def grant_driver_license(self, user_nid):
+        # TODO: turn user into driver
+        # if doesn't exist, make the user first
+        return 
+
+    def add_penalty(self, penalty_id, did, plate_number, penalty_date, penalty_level, description):
+        # TODO: add penalty to the system
+        return
+
 
     

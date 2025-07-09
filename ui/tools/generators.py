@@ -32,6 +32,9 @@ def generate_plate(citycode):
         
         return f"{plate[:2]}{alpha}{plate[2:]}-{citycode}"
 
+def generate_six_digit_id():
+    return randint(100000, 999999)
+
 def is_sorted(string: str):
     is_desc = True
     is_asc = True

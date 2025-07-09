@@ -7,9 +7,9 @@ class Penalty:
             level, 
             description):
         
-        self.id = id
-        self.did = did
-        self.plate_number = plate_number
-        self.date = date
-        self.level = level
-        self.description = description
+        self.id: str = id
+        self.did: str = did
+        self.plate_number: str = plate_number
+        self.date: str = date
+        self.level: str = level
+        self.description: str = description

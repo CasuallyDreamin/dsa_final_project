@@ -85,16 +85,23 @@ class DataBase:
             )
 
         for _penalty in penalties_file_manager.read():
-            self.penalties.add(
-                penalty.Penalty(
+            new_penalty = penalty.Penalty(
                     _penalty[0],
                     _penalty[1],
                     _penalty[2],
                     _penalty[3],
                     _penalty[4],
                     _penalty[5]
-                )
-            )
+                    )
+            
+            self.penalties.add(new_penalty)
+
+            penalized_driver = self.drivers.get_by_did(new_penalty.did)
+            penalized_driver.penalize(new_penalty)
+
+            penalized_plate = self.plates.get(new_penalty.plate_number)
+            penalized_plate.add_penalty(new_penalty)
+
 
     def add_user(self, user: user.User):
         return self.users.add(user)
@@ -132,7 +139,8 @@ class DataBase:
     def get_plates_from(self, city):
         city_code = self.citycode.convert_city_to_code(city)
         city = self.cities.get(city_code)
-        return city.plates.get_all()
+        if city: return city.plates.get_all()
+        else: return "City Not Found."
 
     def get_cars_from(self, city):
         city_code = self.citycode.convert_city_to_code(city)

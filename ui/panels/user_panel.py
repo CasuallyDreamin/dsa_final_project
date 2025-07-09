@@ -62,3 +62,42 @@ class UserPanel:
         
         plates = self.vm.curr_user.plates.get_all()
         return plates
+    
+    def get_negative_points(self):
+        if not self.vm.curr_user:
+            return input("Must be logged in.")
+        
+        # TODO: Check if user is a driver
+
+        # TODO: get user's negative points
+
+    def get_user_record(self):
+        if not self.vm.curr_user:
+            return input("Must be logged in.")
+        
+        # TODO: Check if user is a driver
+
+        # TODO: get user's offense record
+        # offense date - plate number - offense level - description
+
+    def get_plate_record(self, plate):
+        if not self.vm.curr_user:
+            return input("Must be logged in.")
+        
+        # TODO: Check if user is a driver
+
+        # TODO: get his own plate's offense record
+
+        # offense date - offense level - description
+
+    def get_plate_ownership_history(self, plate):
+        if not self.vm.curr_user:
+            return input("Must be logged in.")
+        
+        # TODO: Check if user is a driver
+
+        # TODO: get plate's ownership history
+
+        # car - start date - end date
+
+

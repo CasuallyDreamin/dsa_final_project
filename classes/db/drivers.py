@@ -1,4 +1,5 @@
 from classes.db.data_structures.hashtable import hashtable
+from classes.driver import Driver
 
 class Drivers:
     def __init__(self):
@@ -6,14 +7,14 @@ class Drivers:
         self.drivers_did = hashtable()
 
     def add(self, driver):
-        self.drivers_nid.insert(driver.nid, driver)
-        self.drivers_did.insert(driver.did, driver)
+        self.drivers_nid.insert(str(driver.nid), driver)
+        self.drivers_did.insert(str(driver.did), driver)
         return True
     
-    def get_by_nid(self, nid):
-        return self.drivers_nid.get(nid)
+    def get_by_nid(self, nid) -> Driver:
+        return self.drivers_nid.get(str(nid))
     
-    def get_by_did(self, did):
+    def get_by_did(self, did) -> Driver:
         return self.drivers_did.get(did)
     
     def get_all(self):

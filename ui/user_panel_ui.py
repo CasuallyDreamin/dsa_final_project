@@ -12,9 +12,10 @@ class UserPanelUI(UI):
 3. create a plate
 4. see your cars
 5. see your plates
+6. see negative points
 0. return
 """
-        options = 6
+        options = 7
         super().__init__(options, menu, vm)
         self.panel = UserPanel(self.vm)
 
@@ -24,6 +25,7 @@ class UserPanelUI(UI):
         elif task_id == "3": self.create_plate()
         elif task_id == "4": self.see_all_cars()
         elif task_id == "5": self.see_all_plates()
+        elif task_id == "6": self.see_negative_points()        
         elif task_id == "0": self.running = False
 
     def register(self):
@@ -77,4 +79,5 @@ class UserPanelUI(UI):
     def see_all_plates(self):
         input(self.panel.get_user_plates())
 
-        
+    def see_negative_points(self):
+        input(self.panel.get_negative_points())        

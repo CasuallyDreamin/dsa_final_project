@@ -24,4 +24,4 @@ class User:
         self.plates.add(plate)
         
     def __repr__(self):
-        return f"{self.nid} | {self.name} | {self.family_name} | {self.birth_date} | {self.password}\n {self.cars.get_all()}"
+        return f"{self.nid} | {self.name} | {self.family_name} | {self.birth_date} | {self.password}"
