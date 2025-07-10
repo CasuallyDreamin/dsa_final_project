@@ -13,3 +13,4 @@ class Owners:
 
     def get_all(self):
         return self.owners.get_all()
+

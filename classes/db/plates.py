@@ -17,3 +17,6 @@ class Plates:
 
     def get_all(self):
         return self.ht.get_all()
+    
+    def get_writeable(self):
+        return self.__repr__()

@@ -3,7 +3,8 @@ from classes.db.penalties import Penalties
 from datetime import datetime, timedelta
 
 class Driver:
-    def __init__(self, nid, did, license_date):
+    def __init__(self, nid, did, license_date, is_active = True):
+        
         self.nid = nid
         self.did = did
         self.license_date = license_date

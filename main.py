@@ -13,7 +13,7 @@ def main():
         ui.show()
         ui.do_task(ui.get_option())
         
-    # tell view model to save data into files
+    db.save()
 
 if __name__ == "__main__":
     main()

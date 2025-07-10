@@ -43,3 +43,25 @@ def validate_year(year: str):
         return 1900 <= int(year) <= 2100
     except: return False      
 
+def validate_six_digit_id(id: str):
+    try: int(id)
+    except: return False
+
+    id = str(id)
+    return id.isalnum() and len(id) == 6
+
+
+def validate_eight_digit_id(id: str):
+    try: int(id)
+    except: return False
+
+    id = str(id)
+    return id.isalnum() and len(id) == 8
+
+
+def validate_ten_digit_id(id: str):
+    try: int(id)
+    except: return False
+
+    id = str(id)
+    return id.isalnum() and len(id) == 10

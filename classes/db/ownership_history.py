@@ -7,6 +7,9 @@ class OwnershipHistory:
     def add(self, new_entry):
         return self.history.add_first(new_entry)
     
+    def get_writeable(self):
+        return self.__repr__()
+
     def __repr__(self):
         rp = "CarID | OwnerNationalID | StartDate | EndDate | PlateNumber\n"
         rp += self.history.__repr__()

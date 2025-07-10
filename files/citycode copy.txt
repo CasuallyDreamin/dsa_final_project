@@ -1,10 +1,10 @@
 CityCode | CityName
-51 | Shiraz
+11 | Tehran
 22 | Mashhad
 31 | Isfahan
-11 | Tehran
 44 | Tabriz
-91 | Urmia
-81 | Kermanshah
-71 | Qom
+51 | Shiraz
 61 | Ahvaz
+71 | Qom
+81 | Kermanshah
+91 | Urmia

@@ -31,6 +31,9 @@ class Drivers:
 
         self.drivers_nid.delete(nid)
         return self.drivers_did.delete(driver.did)
+    
+    def get_writeable(self):
+        return self.__repr__()
 
     def __repr__(self):
-        return f"NationalID | DriverID | LicenseDate | Activity\n" + self.drivers_did.get_all()
+        return f"NationalID | DriverID | LicenseDate | Activity\n" + str(self.drivers_did.get_all())

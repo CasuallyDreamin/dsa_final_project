@@ -17,9 +17,11 @@ class Users:
         if self.get_user(nid): return True
         else: return False
 
-    def get_all(self):
-        
+    def get_all(self):    
         return self.ht.get_all()
+
+    def get_writeable(self):
+        return "NationalID | FirstName | LastName | DateOfBirth | Password\n" + str(self.get_all())
 
 
     

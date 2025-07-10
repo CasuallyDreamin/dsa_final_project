@@ -1,6 +1,7 @@
 from db import DataBase
 from datetime import date
 from classes.user import User
+from classes.penalty import Penalty
 
 class ViewModel:
     def __init__(self, Database: DataBase):
@@ -24,6 +25,18 @@ class ViewModel:
 
     def add_driver(self, new_driver):
         return self.db.add_driver(new_driver)
+
+    def add_penalty(self, new_penalty: Penalty):
+        plate = self.db.get_plate(new_penalty.plate_number)
+        
+        if not plate: return "Plate Not Found."
+
+        driver = self.db.get_driver_did(new_penalty.did)
+
+        if not driver: return "Driver Not Found."
+
+        if self.db.add_penalty(new_penalty): return "Successfully added penalty."
+        else: return "Adding penalty failed."
 
     def plate_car(self, new_car, plate_date):
         self.db.ownership_history.add(new_car, plate_date)
@@ -51,10 +64,10 @@ class ViewModel:
         return "CarID | CarName | Year | PlateNumber | Color | OwnerNationalID\n" + str(self.db.get_all_cars())
 
     def get_all_users(self):
-        return "NationalID | FirstName | LastName | DateOfBirth | Password" + str(self.db.get_all_users())
+        return "NationalID | FirstName | LastName | DateOfBirth | Password\n" + str(self.db.get_all_users())
 
     def get_all_plates(self):
-        return "Plate Number | CarID | OwnerNationalID" + str(self.db.get_all_plates())
+        return "Plate Number | CarID | OwnerNationalID\n" + str(self.db.get_all_plates())
     
     def get_all_owners(self):
         return self.db.get_all_owners()

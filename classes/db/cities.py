@@ -23,8 +23,11 @@ class Cities:
         
         return city.cars.get_all()
     
+    def get_writeable(self):
+        return self.__repr__()
+
     def __repr__(self):
-        return "CityCode | CityName\n" + self.get_all()
+        return "CityCode | CityName\n" + str(self.get_all())
         
 
         

@@ -20,5 +20,8 @@ class Cars:
     def get_all(self):
         return self.ht.get_all()
 
+    def get_writeable(self):
+        return self.__repr__()
+    
     def __repr__(self):
         return "CarID | CarName | Year | PlateNumber | Color | OwnerNationalID\n" + str(self.ht.get_all())

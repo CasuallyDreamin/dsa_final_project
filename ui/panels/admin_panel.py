@@ -4,7 +4,8 @@ from classes.penalty import Penalty
 
 from datetime import datetime, timedelta
 from viewmodel import ViewModel
-from ui.tools.generators import generate_eight_digit_id
+from ui.tools.generators import generate_eight_digit_id, generate_six_digit_id
+from ui.tools.validators import validate_six_digit_id
 
 class AdminPanel:
     def __init__(self, vm):
@@ -131,9 +132,43 @@ class AdminPanel:
         if result is True: return f"Driver's license succesfully granted.\nDriver's ID: {driver_id}"
 
 
-    def add_penalty(self, penalty_id, did, plate_number, penalty_date, penalty_level, description):
+    def add_penalty(self,
+                    penalty_id,
+                    did,
+                    plate_number,
+                    penalty_date,
+                    penalty_level, 
+                    description):
         
-        return
+        if penalty_id == "":
+            penalty_id = str(generate_six_digit_id())
+
+        if not validate_six_digit_id(penalty_id):
+            return "Invalid Penalty id. (must be a 6 digit number)"
+        
+        while self.vm.db.penalties.get(penalty_id):
+            penalty_id = str(generate_six_digit_id())
+        
+        if penalty_level == "0":
+            penalty_level = "Low"
+        elif penalty_level == "1":
+            penalty_level = "Medium"
+        elif penalty_level == "2":
+            penalty_level = "High"
+        else: return "Invalid penalty level."
+
+        if penalty_date == "":
+            penalty_date = str(self.vm.sys_date)
+
+        new_penalty = Penalty(
+                    penalty_id,
+                    did,
+                    plate_number,
+                    penalty_date,
+                    penalty_level,
+                    description)
+        
+        return self.vm.add_penalty(new_penalty)
 
 
     

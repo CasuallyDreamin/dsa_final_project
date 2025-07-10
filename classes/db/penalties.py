@@ -14,6 +14,10 @@ class Penalties:
     def get_all(self):
         return self.penalties.get_all()
     
+    def get_writeable(self):
+        return self.__repr__()
+
+
     def __repr__(self):
         return "PenaltyID | DriverID | PlateNumber | PenaltyDate | PenaltyLevel | Description\n" + str(self.get_all())
     
