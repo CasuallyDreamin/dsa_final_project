@@ -126,6 +126,8 @@ class DataBase:
             plate = self.plates.get(new_entry.plate_number)
             plate.add_ownership_entry(new_entry)
         
+            car = self.cars.get(new_entry.car_id)
+            car.add_ownership_entry(new_entry)
 
     def add_user(self, user: User):
         return self.users.add(user)
@@ -135,9 +137,11 @@ class DataBase:
 
     def add_plate(self, plate: Plate):
         city = self.cities.get(plate.number[-2:])
-        city.plates.add(plate)
+        self.plates.add(plate)
+        return city.plates.add(plate)
 
-        return self.plates.add(plate)
+    def add_driver(self, driver: Driver):
+        return self.drivers.add(driver)
     
     def get_user(self, nid):
         return self.users.get(nid)
@@ -151,6 +155,9 @@ class DataBase:
     def get_driver(self, nid):
         return self.drivers.get_by_nid(nid)
     
+    def get_driver_did(self, did):
+        return self.drivers.get_by_did(did)
+        
     def get_all_cars(self):
         return self.cars.get_all()
 
@@ -162,6 +169,15 @@ class DataBase:
     
     def get_all_owners(self):
         return self.owners.get_all()
+    
+    def get_all_drivers(self):
+        return self.drivers.get_all()
+    
+    def delete_car(self, car_id):
+        return self.cars.delete(car_id)
+    
+    def delete_driver(self, nid):
+        return self.drivers.delete_nid(nid)
     
     def get_plates_from(self, city):
         city_code = self.citycode.convert_city_to_code(city)

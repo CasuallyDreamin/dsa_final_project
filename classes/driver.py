@@ -45,4 +45,4 @@ class Driver:
         return self.penalties.get_all()
     
     def __repr__(self):
-        return f"National ID: {self.nid} | Driver ID: {self.did} | License Date: {self.license_date} | Is Active: {self.is_active}"
+        return f"{self.nid} | {self.did} | {self.license_date} | {self.is_active}"

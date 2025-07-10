@@ -1,4 +1,3 @@
-from classes.user import User
 from classes.db.cars import Cars
 
 class Owner:

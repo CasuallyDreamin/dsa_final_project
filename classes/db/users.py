@@ -18,6 +18,7 @@ class Users:
         else: return False
 
     def get_all(self):
+        
         return self.ht.get_all()
 
 

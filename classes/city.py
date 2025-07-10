@@ -11,3 +11,6 @@ class City:
         self.plates = Plates()
         self.owners = Owners()
         self.users = Users()
+
+    def __repr__(self):
+        return f"{self.code} | {self.name}"

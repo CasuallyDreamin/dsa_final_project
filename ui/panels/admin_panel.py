@@ -1,6 +1,10 @@
 from classes.car import Car
+from classes.driver import Driver
+from classes.penalty import Penalty
+
+from datetime import datetime, timedelta
 from viewmodel import ViewModel
-from datetime import datetime
+from ui.tools.generators import generate_eight_digit_id
 
 class AdminPanel:
     def __init__(self, vm):
@@ -62,59 +66,73 @@ class AdminPanel:
         return str(all_drivers)
     
     def delete_car(self, car_id):
-        # TODO: Change plate activity to inactive
         return self.vm.delete_car(car_id)
     
     def delete_driver(self, nid):
-        # TODO: Remove user from drivers
-        return 
+        return self.vm.delete_driver(nid)
     
     def show_plates_in(self, city):
-        plates = self.vm.get_plates_from(city)
-        # plate - active/inactive 
+        plates = self.vm.get_plates_from(city) 
         return str(plates)
 
     def show_cars_in(self, city):
-        cars = self.vm.get_cars_from(city) 
-        # color - name - date - plate - car_id - owner_id   
+        cars = self.vm.get_cars_from(city)    
         return str(cars)
 
     def show_cars_between(self, 
                         first_year = None,
                         last_year  = None):
         cars = self.vm.get_cars_between(first_year, last_year)
-        # show cars in manufactured date period
-        # name - manufactured date - color - plate
         return cars
 
     def show_owners_in(self, city):
         owners = self.vm.get_owners_from(city)
-        # all user infos that live in the city and have an active plate
         return owners
 
     def show_car_ownership_history(self, car_id):
-        # TODO: return ownership history of the car
-        # owner NID - owning start date - owning end date - plate number
-        return
+        return self.vm.get_car_ownership_history(car_id)
 
     def change_user_name(self, nid, new_name, new_family_name):
         return self.vm.change_user_name(nid, new_name, new_family_name)
 
     def change_plate(self, car_id, new_plate):
-        # TODO: change plate of car to new plate
-        return
+        return self.vm.change_plate(car_id, new_plate)
     
     def change_ban_status(self, did):
-        # TODO: change driver license activity (active/inactive)
-        return 
-    
+        return self.vm.switch_ban_status(did)
+         
     def grant_driver_license(self, user_nid):
-        # TODO: turn user into driver
-        # if doesn't exist, make the user first
-        return 
+        
+        user = self.vm.get_user(user_nid)
+
+        if not user: return "User does not exist. Please Register the user first."
+        
+        driver = self.vm.get_driver(user_nid)
+        if driver: return f"{user.name} {user.family_name} is already a driver. driver ID: {driver.did}"
+        
+        birth_date = user.birth_date.split("-")
+        birth_date = datetime(int(birth_date[0]),
+                              int(birth_date[1]),
+                              int(birth_date[2]))
+        
+        if self.vm.sys_date - birth_date.date() < timedelta(18 * 365): return "User is not of legal age."
+        
+        driver_id = generate_eight_digit_id()
+
+        while self.vm.get_driver_did(driver_id):
+            driver_id = generate_eight_digit_id()
+        
+        new_driver = Driver(user.nid,
+                            driver_id,
+                            self.vm.sys_date)
+        
+        result = self.vm.add_driver(new_driver)
+
+        if result is True: return f"Driver's license succesfully granted.\nDriver's ID: {driver_id}"
+
 
     def add_penalty(self, penalty_id, did, plate_number, penalty_date, penalty_level, description):
-        # TODO: add penalty to the system
+        
         return
 
 

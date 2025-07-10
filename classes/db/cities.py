@@ -22,5 +22,9 @@ class Cities:
             return False
         
         return city.cars.get_all()
+    
+    def __repr__(self):
+        return "CityCode | CityName\n" + self.get_all()
+        
 
         

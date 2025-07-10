@@ -20,7 +20,10 @@ class ViewModel:
     
     def add_plate(self, new_plate):
         self.curr_user.add_plate(new_plate)
-        return self.db.add_plate(new_plate)    
+        return self.db.add_plate(new_plate)
+
+    def add_driver(self, new_driver):
+        return self.db.add_driver(new_driver)
 
     def plate_car(self, new_car, plate_date):
         self.db.ownership_history.add(new_car, plate_date)
@@ -41,18 +44,24 @@ class ViewModel:
     def get_driver(self, nid):
         return self.db.get_driver(nid)
     
+    def get_driver_did(self, did):
+        return self.db.get_driver_did(did)
+    
     def get_all_cars(self):
-        return self.db.get_all_cars()
+        return "CarID | CarName | Year | PlateNumber | Color | OwnerNationalID\n" + str(self.db.get_all_cars())
 
     def get_all_users(self):
-        return self.db.get_all_users()
+        return "NationalID | FirstName | LastName | DateOfBirth | Password" + str(self.db.get_all_users())
 
     def get_all_plates(self):
-        return self.db.get_all_plates()
+        return "Plate Number | CarID | OwnerNationalID" + str(self.db.get_all_plates())
     
     def get_all_owners(self):
         return self.db.get_all_owners()
-
+    
+    def get_all_drivers(self):
+        return "NationalID | DriverID | LicenseDate | active\n" + str(self.db.get_all_drivers())
+    
     def get_plates_from(self, city):
         return self.db.get_plates_from(city)
 
@@ -98,18 +107,58 @@ class ViewModel:
         plate = self.db.get_plate(plate)
         return plate.get_all_history()
     
+    def get_car_ownership_history(self, car_id):
+        car = self.db.get_car(car_id)
+        return car.get_all_history()
+    
+    def delete_car(self, car_id):
+        car = self.db.get_car(car_id)
+        
+        if not car: return f"Car with ID '{car_id}' was not found."
+
+        if self.db.delete_car(car_id): 
+            return f"{car} succesfully deleted."
+
+    def delete_driver(self, nid):
+        if self.db.delete_driver(nid): 
+            return f"{nid} driver license succesfully removed."
+        else: 
+            return f"{nid} driver license removal failed."
+
     def change_user_name(self, nid, new_name, new_family_name):
         return self.db.change_user_name(nid, new_name, new_family_name)
+    
+    def change_plate(self, car_id, new_plate):
+        car = self.db.get_car(car_id)
+        new_plate = self.db.get_plate(new_plate)
+        
+        if new_plate.car_id:
+            return "New Plate is already in use."
+        
+        old_plate = self.db.get_plate(car.plate_number)
+        old_plate.car_id = None
+        new_plate.car_id = car.id
+        car.plate_number = new_plate.number
+        
+        return "Plate succesfully swapped."
+     
+    def switch_ban_status(self, did):
+        driver = self.db.get_driver_did(did)
+        
+        if not driver: return "Driver Not Found."
+
+        driver.is_active = not driver.is_active
+        return f"{driver.did} license activity status: {driver.is_active}"
     
     def login(self, national_id, password):
         l_user = self.db.users.get(national_id)
         
         if not l_user:
-            input("user not found.")
+            input("User Not Found.")
             return False
         
         elif l_user.password != password:
-            input("wrong password.")
+            input("Wrong Password.")
             return False
 
         self.curr_user = l_user

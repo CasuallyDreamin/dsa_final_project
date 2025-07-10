@@ -14,7 +14,6 @@ class Drivers:
             return False
         
         return True
-
     
     def get_by_nid(self, nid) -> Driver:
         return self.drivers_nid.get(str(nid))
@@ -25,5 +24,13 @@ class Drivers:
     def get_all(self):
         return self.drivers_nid.get_all()
     
+    def delete_nid(self, nid):
+        driver = self.get_by_nid(nid)
+        
+        if not driver: return False
+
+        self.drivers_nid.delete(nid)
+        return self.drivers_did.delete(driver.did)
+
     def __repr__(self):
-        return self.drivers_did.get_all()
+        return f"NationalID | DriverID | LicenseDate | Activity\n" + self.drivers_did.get_all()

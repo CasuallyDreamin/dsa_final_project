@@ -1,6 +1,4 @@
-from classes.ownership_entry import OwnershipEntry
 from classes.db.data_structures.sll import sll
-from classes.car import Car
 
 class OwnershipHistory:
     def __init__(self):
