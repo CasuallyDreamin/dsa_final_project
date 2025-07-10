@@ -15,4 +15,4 @@ class Penalty:
         self.description: str = description
     
     def __repr__(self):
-        return f"{self.id} | {self.plate_number} | {self.date} | {self.level} | {self.description}"
+        return f"{self.id} | {self.did} | {self.plate_number} | {self.date} | {self.level} | {self.description}"
