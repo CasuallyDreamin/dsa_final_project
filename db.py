@@ -48,8 +48,6 @@ class DataBase:
         driver.penalize(new_penalty)
         return self.penalties.add(new_penalty)
 
-
-
     def get_user(self, nid):
         return self.users.get(nid)
     
@@ -61,6 +59,9 @@ class DataBase:
     
     def get_driver(self, nid):
         return self.drivers.get_by_nid(nid)
+    
+    def get_owner(self, owner_nid):
+        return self.owners.get(owner_nid)
     
     def get_driver_did(self, did):
         return self.drivers.get_by_did(did)
@@ -211,7 +212,9 @@ class DataBase:
             penalized_driver.penalize(new_penalty)
 
             penalized_plate = self.plates.get(new_penalty.plate_number)
-            penalized_plate.add_penalty(new_penalty)
+            
+            if penalized_plate:
+                penalized_plate.add_penalty(new_penalty)
 
         for _ownership_entry in ownership_history_file_manager.read():
             new_entry = OwnershipEntry(
@@ -224,7 +227,9 @@ class DataBase:
             self.ownership_history.add(new_entry)
             
             plate = self.plates.get(new_entry.plate_number)
-            plate.add_ownership_entry(new_entry)
+            
+            if plate:
+                plate.add_ownership_entry(new_entry)
         
             car = self.cars.get(new_entry.car_id)
             car.add_ownership_entry(new_entry)

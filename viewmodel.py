@@ -2,6 +2,7 @@ from db import DataBase
 from datetime import date
 from classes.user import User
 from classes.penalty import Penalty
+from classes.db.data_structures.sll import sll
 
 class ViewModel:
     def __init__(self, Database: DataBase):
@@ -143,15 +144,23 @@ class ViewModel:
     
     def change_plate(self, car_id, new_plate):
         car = self.db.get_car(car_id)
+        old_owner = self.db.get_owner(car.owner_nid)
         new_plate = self.db.get_plate(new_plate)
+        new_owner = self.db.get_owner(new_plate.owner_nid)
         
         if new_plate.car_id:
             return "New Plate is already in use."
         
+        old_owner.delete_car(car_id)
+        new_owner.add_car(car)
+
         old_plate = self.db.get_plate(car.plate_number)
         old_plate.car_id = None
         new_plate.car_id = car.id
+        
         car.plate_number = new_plate.number
+        car.owner_nid = new_plate.owner_nid
+
         
         return "Plate succesfully swapped."
      
@@ -176,3 +185,17 @@ class ViewModel:
 
         self.curr_user = l_user
         return True
+    
+    def get_owners_with_more_cars(self, x: int):
+        owners = self.db.get_all_owners()
+        result = sll()
+        curr_owner = owners.head
+
+        while curr_owner:
+            owners_cars = curr_owner.data.cars
+            if owners_cars.size >= x:
+                result.add_first(curr_owner.data)
+
+            curr_owner = curr_owner.next
+
+        return result

@@ -7,7 +7,6 @@ class Users:
         
     def add(self, user: User):
         return self.ht.insert(str(user.nid), user)
-        
 
     def get(self, nid: str)->User:
         nid = str(nid)

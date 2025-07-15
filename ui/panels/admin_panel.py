@@ -169,6 +169,10 @@ class AdminPanel:
                     description)
         
         return self.vm.add_penalty(new_penalty)
+    
+    def get_owners_with_more_cars(self, x):
+        x = int(x)
+        return self.vm.get_owners_with_more_cars(x)
 
 
     

@@ -24,9 +24,10 @@ class AdminPanelUI(UI):
 16. grant driver license
 17. ban/unban driver
 18. penalize driver
+19. get owners with more cars than x
 0. return
 """     
-        options = 19
+        options = 20
         super().__init__(options, menu, vm)
         self.panel = AdminPanel(vm)
 
@@ -49,8 +50,17 @@ class AdminPanelUI(UI):
         elif task_id == "16": self.grant_drivers_license()
         elif task_id == "17": self.ban_unban_driver()
         elif task_id == "18": self.penalize_driver()
+        elif task_id == "19": self.get_owners_with_more_cars()
         elif task_id == "0": self.running = False
 
+    def get_owners_with_more_cars(self):
+        x: str = input("x: ")
+
+        if not x.isalnum():
+            return input("must enter a number")
+
+        input(self.panel.get_owners_with_more_cars(x))
+        
     def plate_car(self):
         color = input("Color \nWT: White | BC: Black | RD: Red | BL: Blue | GR: Green | OT: Other): ")
         if not validate_color(color): return input("Invalid Color.")

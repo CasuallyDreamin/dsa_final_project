@@ -3,8 +3,10 @@ from classes.car import Car
 class Cars:
     def __init__(self):
         self.ht = hashtable()
+        self.size = 0
         
     def add(self, car):
+        self.size += 1
         return self.ht.insert(car.id, car)
         
     def get(self, car_id: str)-> Car:
